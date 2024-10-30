@@ -1,16 +1,227 @@
 [
   {
-    "type": "argument",
+    "type": "ALIAS",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "AU_CAS_OU",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "BEGIN_SQL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "CASE_OF",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "CLASS",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "CONSTRUCTOR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "DEBUT_SQL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "DECLARE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "ELSE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_CASE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_FOR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_FOR_EACH",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_IF",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_SQL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_USE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "END_WHILE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "EXTENDS",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_DE_CAS",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_DE_CHAQUE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_POUR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_SQL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_TANT_QUE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FIN_UTILISER",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FOR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FOR_EACH",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "FUNCTION",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "IF",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "JUSQUE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "POUR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "POUR_CHAQUE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "PROPERTY",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "REPEAT",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "REPETER",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "SINON",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "TANT_QUE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "UNTIL",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "USE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "UTILISER",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "VAR",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "WHILE",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "alias_declaration",
     "named": true,
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "table",
+          "type": "ALIAS",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "argument_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
         {
           "type": "value",
           "named": true
@@ -19,15 +230,15 @@
     }
   },
   {
-    "type": "arguments",
+    "type": "array_access",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "argument",
+          "type": "value",
           "named": true
         }
       ]
@@ -49,12 +260,27 @@
     }
   },
   {
-    "type": "begin_sql",
+    "type": "basic_type",
     "named": true,
     "fields": {}
   },
   {
-    "type": "break",
+    "type": "binary_operation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "boolean",
     "named": true,
     "fields": {}
   },
@@ -67,11 +293,39 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "AU_CAS_OU",
+          "named": true
+        },
+        {
+          "type": "CASE_OF",
+          "named": true
+        },
+        {
+          "type": "ELSE",
+          "named": true
+        },
+        {
+          "type": "END_CASE",
+          "named": true
+        },
+        {
+          "type": "FIN_DE_CAS",
+          "named": true
+        },
+        {
+          "type": "SINON",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
           "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_operation",
           "named": true
         },
         {
@@ -83,11 +337,7 @@
           "named": true
         },
         {
-          "type": "case_of",
-          "named": true
-        },
-        {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -95,19 +345,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
-          "named": true
-        },
-        {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "else",
-          "named": true
-        },
-        {
-          "type": "end_case",
           "named": true
         },
         {
@@ -119,11 +357,19 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -135,7 +381,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -147,7 +393,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -166,57 +412,14 @@
       "required": true,
       "types": [
         {
-          "type": "argument",
+          "type": "condition",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "case_of",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "class",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "command",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "arguments",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "property",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "comment",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "constant",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "constructor_block",
+    "type": "class_declaration",
     "named": true,
     "fields": {},
     "children": {
@@ -224,37 +427,174 @@
       "required": true,
       "types": [
         {
-          "type": "class",
+          "type": "CLASS",
           "named": true
         },
         {
-          "type": "constructor_name",
+          "type": "EXTENDS",
           "named": true
         },
         {
-          "type": "local_variable",
+          "type": "constructor_declaration",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "constructor_name",
+    "type": "class_type",
     "named": true,
     "fields": {}
   },
   {
-    "type": "continue",
+    "type": "comment",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "ternary_operation",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "constructor_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "CLASS",
+          "named": true
+        },
+        {
+          "type": "CONSTRUCTOR",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
+          "type": "case_block",
+          "named": true
+        },
+        {
+          "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "declare_block",
+          "named": true
+        },
+        {
+          "type": "for_block",
+          "named": true
+        },
+        {
+          "type": "for_each_block",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_block",
+          "named": true
+        },
+        {
+          "type": "sql_block",
+          "named": true
+        },
+        {
+          "type": "ternary_operation",
+          "named": true
+        },
+        {
+          "type": "use_block",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_block",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "date",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "declare",
     "named": true,
     "fields": {}
   },
@@ -267,87 +607,19 @@
       "required": true,
       "types": [
         {
-          "type": "class",
+          "type": "DECLARE",
           "named": true
         },
         {
-          "type": "declare",
+          "type": "parameter_list",
           "named": true
         },
         {
-          "type": "local_variable",
+          "type": "return_declaration",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "else",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_case",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_for",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_for_each",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_if",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_sql",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_use",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "end_while",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "field",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "property",
-          "named": true
-        },
-        {
-          "type": "table",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "for",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "for_block",
@@ -358,11 +630,23 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "END_FOR",
           "named": true
         },
         {
-          "type": "arguments",
+          "type": "FIN_POUR",
+          "named": true
+        },
+        {
+          "type": "FOR",
+          "named": true
+        },
+        {
+          "type": "POUR",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -370,11 +654,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -382,19 +670,11 @@
           "named": true
         },
         {
-          "type": "constructor_block",
+          "type": "condition",
           "named": true
         },
         {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "end_for",
-          "named": true
-        },
-        {
-          "type": "for",
           "named": true
         },
         {
@@ -406,11 +686,23 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -422,7 +714,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -434,7 +726,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -443,11 +735,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "for_each",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "for_each_block",
@@ -458,15 +745,39 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "END_FOR_EACH",
           "named": true
         },
         {
-          "type": "argument",
+          "type": "FIN_DE_CHAQUE",
           "named": true
         },
         {
-          "type": "arguments",
+          "type": "FOR_EACH",
+          "named": true
+        },
+        {
+          "type": "JUSQUE",
+          "named": true
+        },
+        {
+          "type": "POUR_CHAQUE",
+          "named": true
+        },
+        {
+          "type": "TANT_QUE",
+          "named": true
+        },
+        {
+          "type": "UNTIL",
+          "named": true
+        },
+        {
+          "type": "WHILE",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -474,11 +785,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -486,7 +801,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
+          "type": "condition",
           "named": true
         },
         {
@@ -494,15 +809,7 @@
           "named": true
         },
         {
-          "type": "end_for_each",
-          "named": true
-        },
-        {
           "type": "for_block",
-          "named": true
-        },
-        {
-          "type": "for_each",
           "named": true
         },
         {
@@ -510,11 +817,23 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -526,11 +845,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
-          "named": true
-        },
-        {
-          "type": "until",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -542,11 +857,7 @@
           "named": true
         },
         {
-          "type": "var_block",
-          "named": true
-        },
-        {
-          "type": "while",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -557,7 +868,7 @@
     }
   },
   {
-    "type": "formula",
+    "type": "function_declaration",
     "named": true,
     "fields": {},
     "children": {
@@ -565,86 +876,11 @@
       "required": true,
       "types": [
         {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "function",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arguments",
+          "type": "FUNCTION",
           "named": true
         },
         {
-          "type": "function_name",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "property",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "function_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "class",
-          "named": true
-        },
-        {
-          "type": "function_name",
-          "named": true
-        },
-        {
-          "type": "local_variable",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "function_name",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "if",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "if_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "alias",
-          "named": true
-        },
-        {
-          "type": "argument",
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -652,11 +888,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -664,19 +904,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
-          "named": true
-        },
-        {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "else",
-          "named": true
-        },
-        {
-          "type": "end_if",
           "named": true
         },
         {
@@ -688,11 +916,7 @@
           "named": true
         },
         {
-          "type": "function_block",
-          "named": true
-        },
-        {
-          "type": "if",
+          "type": "function_declaration",
           "named": true
         },
         {
@@ -700,7 +924,23 @@
           "named": true
         },
         {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_block",
+          "named": true
+        },
+        {
+          "type": "return_declaration",
           "named": true
         },
         {
@@ -708,7 +948,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -720,7 +960,118 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "ELSE",
+          "named": true
+        },
+        {
+          "type": "END_IF",
+          "named": true
+        },
+        {
+          "type": "IF",
+          "named": true
+        },
+        {
+          "type": "SINON",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
+          "type": "case_block",
+          "named": true
+        },
+        {
+          "type": "class_declaration",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "declare_block",
+          "named": true
+        },
+        {
+          "type": "for_block",
+          "named": true
+        },
+        {
+          "type": "for_each_block",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_block",
+          "named": true
+        },
+        {
+          "type": "sql_block",
+          "named": true
+        },
+        {
+          "type": "ternary_operation",
+          "named": true
+        },
+        {
+          "type": "use_block",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -741,23 +1092,15 @@
     "fields": {}
   },
   {
-    "type": "method",
+    "type": "method_call",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "arguments",
-          "named": true
-        },
-        {
-          "type": "function_name",
-          "named": true
-        },
-        {
-          "type": "value",
+          "type": "argument_list",
           "named": true
         }
       ]
@@ -769,7 +1112,49 @@
     "fields": {}
   },
   {
+    "type": "object_access",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "property_access",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "class_type",
+          "named": true
+        },
+        {
+          "type": "value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameter_list",
     "named": true,
     "fields": {},
     "children": {
@@ -777,26 +1162,7 @@
       "required": false,
       "types": [
         {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "property",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parenthesized_value",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "value",
+          "type": "parameter",
           "named": true
         }
       ]
@@ -808,7 +1174,12 @@
     "fields": {}
   },
   {
-    "type": "project_method",
+    "type": "property_access",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "property_declaration",
     "named": true,
     "fields": {},
     "children": {
@@ -816,39 +1187,19 @@
       "required": true,
       "types": [
         {
-          "type": "arguments",
+          "type": "PROPERTY",
           "named": true
         },
         {
-          "type": "process_variable",
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "class_type",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "property",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "function_name",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "repeat",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "repeat_block",
@@ -859,11 +1210,23 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "JUSQUE",
           "named": true
         },
         {
-          "type": "argument",
+          "type": "REPEAT",
+          "named": true
+        },
+        {
+          "type": "REPETER",
+          "named": true
+        },
+        {
+          "type": "UNTIL",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -871,11 +1234,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -883,7 +1250,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
+          "type": "condition",
           "named": true
         },
         {
@@ -899,7 +1266,7 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
@@ -907,7 +1274,11 @@
           "named": true
         },
         {
-          "type": "repeat",
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -919,11 +1290,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
-          "named": true
-        },
-        {
-          "type": "until",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -935,7 +1302,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -946,9 +1313,27 @@
     }
   },
   {
-    "type": "return",
+    "type": "return_declaration",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "class_type",
+          "named": true
+        },
+        {
+          "type": "local_variable",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "source",
@@ -959,7 +1344,7 @@
       "required": false,
       "types": [
         {
-          "type": "alias",
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -967,19 +1352,19 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "constructor_block",
           "named": true
         },
         {
@@ -995,11 +1380,19 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -1011,7 +1404,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -1023,7 +1416,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -1042,7 +1435,23 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "BEGIN_SQL",
+          "named": true
+        },
+        {
+          "type": "DEBUT_SQL",
+          "named": true
+        },
+        {
+          "type": "END_SQL",
+          "named": true
+        },
+        {
+          "type": "FIN_SQL",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -1050,7 +1459,7 @@
           "named": true
         },
         {
-          "type": "begin_sql",
+          "type": "binary_operation",
           "named": true
         },
         {
@@ -1058,7 +1467,7 @@
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -1066,15 +1475,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
-          "named": true
-        },
-        {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "end_sql",
           "named": true
         },
         {
@@ -1086,11 +1487,19 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -1102,7 +1511,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -1114,7 +1523,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -1125,17 +1534,7 @@
     }
   },
   {
-    "type": "string",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "table",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "terminate_block",
+    "type": "ternary_operation",
     "named": true,
     "fields": {},
     "children": {
@@ -1143,32 +1542,9 @@
       "required": true,
       "types": [
         {
-          "type": "break",
+          "type": "condition",
           "named": true
         },
-        {
-          "type": "continue",
-          "named": true
-        },
-        {
-          "type": "return",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ternary",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
         {
           "type": "value",
           "named": true
@@ -1182,16 +1558,6 @@
     "fields": {}
   },
   {
-    "type": "until",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "use",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "use_block",
     "named": true,
     "fields": {},
@@ -1200,11 +1566,23 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "END_USE",
           "named": true
         },
         {
-          "type": "argument",
+          "type": "FIN_UTILISER",
+          "named": true
+        },
+        {
+          "type": "USE",
+          "named": true
+        },
+        {
+          "type": "UTILISER",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -1212,11 +1590,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -1224,15 +1606,7 @@
           "named": true
         },
         {
-          "type": "constructor_block",
-          "named": true
-        },
-        {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "end_use",
           "named": true
         },
         {
@@ -1244,11 +1618,23 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -1260,11 +1646,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
-          "named": true
-        },
-        {
-          "type": "use",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -1276,7 +1658,7 @@
           "named": true
         },
         {
-          "type": "var_block",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -1291,112 +1673,21 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "command",
+          "type": "array_access",
           "named": true
         },
         {
-          "type": "constant",
+          "type": "boolean",
           "named": true
         },
         {
           "type": "date",
           "named": true
         },
-        {
-          "type": "field",
-          "named": true
-        },
-        {
-          "type": "formula",
-          "named": true
-        },
-        {
-          "type": "function",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_value",
-          "named": true
-        },
-        {
-          "type": "project_method",
-          "named": true
-        },
-        {
-          "type": "property",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "ternary",
-          "named": true
-        },
-        {
-          "type": "time",
-          "named": true
-        },
-        {
-          "type": "variable",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "var",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "var_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "class",
-          "named": true
-        },
-        {
-          "type": "local_variable",
-          "named": true
-        },
-        {
-          "type": "process_variable",
-          "named": true
-        },
-        {
-          "type": "var",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "variable",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
         {
           "type": "interprocess_variable",
           "named": true
@@ -1406,11 +1697,15 @@
           "named": true
         },
         {
-          "type": "method",
+          "type": "method_call",
           "named": true
         },
         {
-          "type": "parameter",
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "object_access",
           "named": true
         },
         {
@@ -1418,20 +1713,50 @@
           "named": true
         },
         {
-          "type": "property",
+          "type": "string",
           "named": true
         },
         {
-          "type": "value",
+          "type": "time",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "while",
+    "type": "var_declaration",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "VAR",
+          "named": true
+        },
+        {
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "class_type",
+          "named": true
+        },
+        {
+          "type": "interprocess_variable",
+          "named": true
+        },
+        {
+          "type": "local_variable",
+          "named": true
+        },
+        {
+          "type": "process_variable",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "while_block",
@@ -1442,11 +1767,23 @@
       "required": true,
       "types": [
         {
-          "type": "alias",
+          "type": "END_WHILE",
           "named": true
         },
         {
-          "type": "argument",
+          "type": "FIN_TANT_QUE",
+          "named": true
+        },
+        {
+          "type": "TANT_QUE",
+          "named": true
+        },
+        {
+          "type": "WHILE",
+          "named": true
+        },
+        {
+          "type": "alias_declaration",
           "named": true
         },
         {
@@ -1454,11 +1791,15 @@
           "named": true
         },
         {
+          "type": "binary_operation",
+          "named": true
+        },
+        {
           "type": "case_block",
           "named": true
         },
         {
-          "type": "class_extends",
+          "type": "class_declaration",
           "named": true
         },
         {
@@ -1466,15 +1807,11 @@
           "named": true
         },
         {
-          "type": "constructor_block",
+          "type": "condition",
           "named": true
         },
         {
           "type": "declare_block",
-          "named": true
-        },
-        {
-          "type": "end_while",
           "named": true
         },
         {
@@ -1486,11 +1823,19 @@
           "named": true
         },
         {
-          "type": "function_block",
+          "type": "function_declaration",
           "named": true
         },
         {
           "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
+          "type": "property_declaration",
           "named": true
         },
         {
@@ -1502,7 +1847,7 @@
           "named": true
         },
         {
-          "type": "terminate_block",
+          "type": "ternary_operation",
           "named": true
         },
         {
@@ -1514,11 +1859,7 @@
           "named": true
         },
         {
-          "type": "var_block",
-          "named": true
-        },
-        {
-          "type": "while",
+          "type": "var_declaration",
           "named": true
         },
         {
@@ -1549,10 +1890,6 @@
     "named": false
   },
   {
-    "type": "&&",
-    "named": false
-  },
-  {
     "type": "(",
     "named": false
   },
@@ -1562,6 +1899,10 @@
   },
   {
     "type": "*",
+    "named": false
+  },
+  {
+    "type": "*/",
     "named": false
   },
   {
@@ -1609,6 +1950,10 @@
     "named": false
   },
   {
+    "type": "4D",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -1622,10 +1967,6 @@
   },
   {
     "type": "<",
-    "named": false
-  },
-  {
-    "type": "<<",
     "named": false
   },
   {
@@ -1649,10 +1990,6 @@
     "named": false
   },
   {
-    "type": ">>",
-    "named": false
-  },
-  {
     "type": "?",
     "named": false
   },
@@ -1669,15 +2006,63 @@
     "named": false
   },
   {
+    "type": "BLOB",
+    "named": false
+  },
+  {
+    "type": "Boolean",
+    "named": false
+  },
+  {
+    "type": "Collection",
+    "named": false
+  },
+  {
+    "type": "Date",
+    "named": false
+  },
+  {
+    "type": "False",
+    "named": false
+  },
+  {
+    "type": "Integer",
+    "named": false
+  },
+  {
+    "type": "Object",
+    "named": false
+  },
+  {
+    "type": "Picture",
+    "named": false
+  },
+  {
+    "type": "Pointer",
+    "named": false
+  },
+  {
+    "type": "Real",
+    "named": false
+  },
+  {
+    "type": "Text",
+    "named": false
+  },
+  {
+    "type": "Time",
+    "named": false
+  },
+  {
+    "type": "True",
+    "named": false
+  },
+  {
+    "type": "Variant",
+    "named": false
+  },
+  {
     "type": "[",
-    "named": false
-  },
-  {
-    "type": "[[",
-    "named": false
-  },
-  {
-    "type": "\\",
     "named": false
   },
   {
@@ -1685,39 +2070,23 @@
     "named": false
   },
   {
-    "type": "]]",
-    "named": false
-  },
-  {
     "type": "^",
     "named": false
   },
   {
-    "type": "^|",
+    "type": "cs",
     "named": false
   },
   {
-    "type": "alias",
-    "named": true
-  },
-  {
-    "type": "class_extends",
-    "named": true
-  },
-  {
-    "type": "{",
+    "type": "ds",
     "named": false
+  },
+  {
+    "type": "string",
+    "named": true
   },
   {
     "type": "|",
-    "named": false
-  },
-  {
-    "type": "||",
-    "named": false
-  },
-  {
-    "type": "}",
     "named": false
   }
 ]
