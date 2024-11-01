@@ -1,15 +1,34 @@
 const PREC = {
   LOWEST: -4,
   COMMENT: -3,
-  KEYWORD: -2,
-  OPERATOR: -1,
-  BASE: 0,
-  DECLARATION: 1,
-  EXPRESSION: 2,
+  OPERATOR: -2,
+  BASE: -1,
+  VALUE: 0,
+  EXPRESSION: 1,
+  CONDITION: 2,
   MEMBER: 3,
   CALL: 4,
-  PRIMARY: 5
+  DECLARATION: 5,
+  KEYWORD: 6
 }
+
+function ci(keyword) {
+  return new RegExp(
+    keyword
+      .split('')
+      .map(char => {
+        if (/[a-zA-Z]/.test(char)) {
+          return `[${char.toLowerCase()}${char.toUpperCase()}]`;
+        }
+        if (/\s/.test(char)) {
+          return `\\s+`;
+        }
+        return char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      })
+      .join('')
+  );
+}
+
 
 module.exports = grammar({
   name: 'fourd',
@@ -19,9 +38,9 @@ module.exports = grammar({
 
     _statement: $ => choice(
       $.comment,
-      $._block,
+      prec(PREC.KEYWORD, $._block),
       $._declaration,
-      $._expression
+      prec.left(PREC.BASE, $._expression)
     ),
 
     // Comments
@@ -53,66 +72,109 @@ module.exports = grammar({
     // Declarations
     _declaration: $ => choice(
       $.var_declaration,
-      $.function_declaration,
-      $.class_declaration,
-      $.property_declaration,
-      $.alias_declaration
+      $.c_declaration
     ),
 
-    // Expressions
-    _expression: $ => prec.left(PREC.EXPRESSION, choice(
-      $.assignment,
-      $.binary_operation,
-      $.ternary_operation,
-      $.method_call,
-      $.value
+    // Modern VAR syntax
+    var_declaration: $ => prec.left(PREC.DECLARATION, seq(
+      $.VAR,
+      $.variable_list,
+      optional(seq(':', $._type))
     )),
 
-    // Common patterns
-    _identifier: $ => /[A-Za-z_][A-Za-z0-9_]*/,
+    // Classic C_* syntax
+    c_declaration: $ => prec.left(PREC.DECLARATION, seq(
+      choice(
+        'C_TEXT',
+        'C_LONGINT',
+        'C_REAL',
+        'C_DATE',
+        'C_TIME',
+        'C_BOOLEAN',
+        'C_BLOB',
+        'C_OBJECT',
+        'C_COLLECTION',
+        'C_VARIANT',
+        'C_POINTER',
+        'C_PICTURE'
+      ),
+      '(',
+      $._variable,
+      ')'
+    )),
 
+    // List of variables separated by semicolons
+    variable_list: $ => seq(
+      $._variable,
+      repeat(seq(
+        ';',
+        $._variable
+      ))
+    ),
+
+    // Variables can be local, process, or interprocess
     _variable: $ => choice(
       $.local_variable,
       $.process_variable,
       $.interprocess_variable
     ),
 
+    // Expressions
+    _expression: $ => prec.left(PREC.EXPRESSION, choice(
+      // Operations that produce a new value
+      $.assignment_expression,     // a := b
+      $.binary_expression,        // a + b, a > b, a && b
+      $.ternary_expression,       // a ? b : c
+      $.parenthesized_expression, // (a)
+      // Atomic expressions
+      $.value,                    // Keep using existing value rule for now
+      $.object_chain,            // Form.sys
+      $.function_call            // method()
+    )),
+
+    parenthesized_expression: $ => seq('(', $._expression, ')'),
+
+    // Common patterns
+    _identifier: $ => choice(
+      prec.left(PREC.LOWEST, /[A-Za-z_][A-Za-z0-9_]*/),
+    ),
+
     local_variable: $ => seq('$', $._identifier),
     process_variable: $ => $._identifier,
     interprocess_variable: $ => seq('<>', $._identifier),
 
-    for_each_block: $ => seq(
-      choice($.FOR_EACH, $.POUR_CHAQUE),
+    // Block structures
+    for_block: $ => prec.left(PREC.KEYWORD, seq(
+      $.FOR,
+      $.parameter_list,
+      repeat($._statement),
+      $.END_FOR
+    )),
+
+    for_each_block: $ => prec.left(PREC.KEYWORD, seq(
+      $.FOR_EACH,
       $.parameter_list,
       optional(seq(
-        choice($.WHILE, $.UNTIL, $.JUSQUE, $.TANT_QUE),
-        $.condition
+        choice($.WHILE, $.UNTIL),
+        $.parenthesized_expression
       )),
       repeat($._statement),
-      choice($.END_FOR_EACH, $.FIN_DE_CHAQUE)
-    ),
+      $.END_FOR_EACH
+    )),
 
-    declare_block: $ => prec.left(PREC.DECLARATION, seq(
+    declare_block: $ => prec.left(PREC.KEYWORD, seq(
+      '#',
       $.DECLARE,
       $.parameter_list,
       optional($.return_declaration)
     )),
 
     while_block: $ => seq(
-      choice($.WHILE, $.TANT_QUE),
-      $.condition,
+      $.WHILE,
+      $._block_condition,
       repeat($._statement),
-      choice($.END_WHILE, $.FIN_TANT_QUE)
+      $.END_WHILE
     ),
-
-    // Declarations
-    var_declaration: $ => prec.left(PREC.DECLARATION, seq(
-      $.VAR,
-      $._variable,
-      optional(seq(
-        ':', $._type
-      ))
-    )),
 
     // Types
     _type: $ => choice(
@@ -142,63 +204,49 @@ module.exports = grammar({
     ),
 
     // Block structures
-    while_block: $ => seq(
-      choice($.WHILE, $.TANT_QUE),
-      $.condition,
-      repeat($._statement),
-      choice($.END_WHILE, $.FIN_TANT_QUE)
-    ),
-
     repeat_block: $ => seq(
-      choice($.REPEAT, $.REPETER),
+      $.REPEAT,
       repeat($._statement),
-      seq(choice($.UNTIL, $.JUSQUE), $.condition)
+      seq($.UNTIL, $.parenthesized_expression)
     ),
 
     if_block: $ => seq(
       $.IF,
-      $.condition,
+      $._block_condition,
       repeat($._statement),
       optional(seq(
-        choice($.ELSE, $.SINON),
+        $.ELSE,
         repeat($._statement)
       )),
       $.END_IF
     ),
 
     case_block: $ => seq(
-      choice($.CASE_OF, $.AU_CAS_OU),
+      $.CASE_OF,
       repeat(seq(
-        $.case_condition,
+        ':',
+        $._block_condition,
         repeat($._statement)
       )),
       optional(seq(
-        choice($.ELSE, $.SINON),
+        $.ELSE,
         repeat($._statement)
       )),
-      choice($.END_CASE, $.FIN_DE_CAS)
+      $.END_CASE
     ),
 
-    for_block: $ => seq(
-      choice($.FOR, $.POUR),
-      $.parameter_list,
-      $.condition,
-      repeat($._statement),
-      choice($.END_FOR, $.FIN_POUR)
-    ),
-
-    use_block: $ => seq(
-      choice($.USE, $.UTILISER),
+    use_block: $ => prec.left(PREC.KEYWORD, seq(
+      $.USE,
       $.parameter_list,
       repeat($._statement),
-      choice($.END_USE, $.FIN_UTILISER)
-    ),
+      $.END_USE
+    )),
 
-    sql_block: $ => seq(
-      choice($.BEGIN_SQL, $.DEBUT_SQL),
+    sql_block: $ => prec.left(PREC.KEYWORD, seq(
+      $.BEGIN_SQL,
       repeat($._statement),
-      choice($.END_SQL, $.FIN_SQL)
-    ),
+      $.END_SQL
+    )),
 
     // Function and method declarations
     function_declaration: $ => prec.left(PREC.DECLARATION, seq(
@@ -241,50 +289,45 @@ module.exports = grammar({
     )),
 
     // Expressions
-    assignment: $ => prec.left(PREC.EXPRESSION, seq(
+    assignment_expression: $ => prec.right(PREC.EXPRESSION, seq(
       $.value,
       ':=',
       $.value
     )),
 
-    binary_operation: $ => prec.left(PREC.OPERATOR, seq(
-      $.value,
-      $._operator,
-      $.value
-    )),
-
-    ternary_operation: $ => prec.right(PREC.OPERATOR, seq(
-      $.condition,
-      '?',
-      $.value,
-      ':',
-      $.value
-    )),
-
-    method_call: $ => prec.left(PREC.CALL, seq(
+    binary_expression: $ => prec.left(PREC.OPERATOR, seq(
+      $._expression,
       choice(
-        $._identifier,
+        // Arithmetic
+        '+', '-', '*', '/', '%',
+        // Comparison
+        '=', '#', '<', '>', '<=', '>=',
+        // Logical
+        '&', '|', '^', '&&', '||'
       ),
-      $.argument_list,
+      $._expression
     )),
 
-    case_condition: $ => seq(
+    ternary_expression: $ => prec.right(PREC.CONDITION, seq(
+      $._expression,
+      '?',
+      $._expression,
       ':',
-      $.condition
-    ),
+      $._expression
+    )),
 
-    // Values and literals
-    value: $ => choice(
-      $.number,
-      $.string,
-      $.date,
-      $.time,
-      $.boolean,
-      $._variable,
-      $.method_call,
-      $.object_access,
-      $.array_access
-    ),
+    function_call: $ => prec.left(PREC.CALL, choice(
+      // Direct function call
+      seq(
+        field('name', $._identifier),
+        $.argument_list
+      ),
+      // Method call on object chain
+      seq(
+        field('object', $.object_chain),
+        $.argument_list
+      )
+    )),
 
     number: $ => choice(
       $._integer,
@@ -314,63 +357,96 @@ module.exports = grammar({
     ),
 
     // Operators
-    _operator: $ => choice(
+    _operator: $ => prec.left(PREC.OPERATOR, choice(
       '+', '-', '*', '/', '%',
       '=', '#', '<', '>', '<=', '>=',
       '&', '|', '^',
-      ':=', '+=', '-=', '*=', '/=',
+      '+=', '-=', '*=', '/=',
       '??', '?-', '?+'
-    ),
+    )),
 
     // Keywords
-    FOR_EACH: $ => prec(PREC.KEYWORD, /[Ff][Oo][Rr]\s+[Ee][Aa][Cc][Hh]/),
-    POUR_CHAQUE: $ => prec(PREC.KEYWORD, /[Pp][Oo][Uu][Rr]\s+[Cc][Hh][Aa][Qq][Uu][Ee]/),
-    FOR: $ => prec(PREC.KEYWORD, /[Ff][Oo][Rr]/),
-    POUR: $ => prec(PREC.KEYWORD, /[Pp][Oo][Uu][Rr]/),
-    WHILE: $ => prec(PREC.KEYWORD, /[Ww][Hh][Ii][Ll][Ee]/),
-    TANT_QUE: $ => prec(PREC.KEYWORD, /[Tt][Aa][Nn][Tt]\s+[Qq][Uu][Ee]/),
-    JUSQUE: $ => prec(PREC.KEYWORD, /[Jj][Uu][Ss][Qq][Ue]/),
-    END_WHILE: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Ww][Hh][Ii][Ll][Ee]/),
-    FIN_TANT_QUE: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Tt][Aa][Nn][Tt]\s+[Qq][Uu][Ee]/),
-    REPEAT: $ => prec(PREC.KEYWORD, /[Rr][Ee][Pp][Ee][Aa][Tt]/),
-    REPETER: $ => prec(PREC.KEYWORD, /[Rr][Ee][Pp][Ee][Tt][Ee][Rr]/),
-    IF: $ => prec(PREC.KEYWORD, /[Ii][Ff]/),
-    END_IF: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Ii][Ff]/),
-    ELSE: $ => prec(PREC.KEYWORD, /[Ee][Ll][Ss][Ee]/),
-    SINON: $ => prec(PREC.KEYWORD, /[Ss][Ii][Nn][Oo][Nn]/),
-    FUNCTION: $ => prec(PREC.KEYWORD, /[Ff][Uu][Nn][Cc][Tt][Ii][Oo][Nn]/),
-    CLASS: $ => prec(PREC.KEYWORD, /[Cc][Ll][Aa][Ss][Ss]/),
-    CONSTRUCTOR: $ => prec(PREC.KEYWORD, /[Cc][Oo][Nn][Ss][Tt][Rr][Uu][Cc][Tt][Oo][Rr]/),
-    EXTENDS: $ => prec(PREC.KEYWORD, /[Ee][Xx][Tt][Ee][Nn][Dd][Ss]/),
-    USE: $ => prec(PREC.KEYWORD, /[Uu][Ss][Ee]/),
-    UTILISER: $ => prec(PREC.KEYWORD, /[Uu][Tt][Ii][Ll][Ii][Ss][Ee][Rr]/),
-    END_USE: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Uu][Ss][Ee]/),
-    FIN_UTILISER: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Uu][Tt][Ii][Ll][Ii][Ss][Ee][Rr]/),
-    END_FOR: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Ff][Oo][Rr]/),
-    FIN_POUR: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Pp][Oo][Uu][Rr]/),
-    END_FOR_EACH: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Ff][Oo][Rr]\s+[Ee][Aa][Cc][Hh]/),
-    FIN_DE_CHAQUE: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Dd][Ee]\s+[Cc][Hh][Aa][Qq][Uu][Ee]/),
-    BEGIN_SQL: $ => prec(PREC.KEYWORD, /[Bb][Ee][Gg][Ii][Nn]\s+[Ss][Qq][Ll]/),
-    DEBUT_SQL: $ => prec(PREC.KEYWORD, /[Dd][Ee][Bb][Uu][Tt]\s+[Ss][Qq][Ll]/),
-    END_SQL: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Ss][Qq][Ll]/),
-    FIN_SQL: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Ss][Qq][Ll]/),
-    DECLARE: $ => prec(PREC.KEYWORD, /[Dd][Ee][Cc][Ll][Aa][Rr][Ee]/),
-    VAR: $ => prec(PREC.KEYWORD, /[Vv][Aa][Rr]/),
-    ALIAS: $ => prec(PREC.KEYWORD, /[Aa][Ll][Ii][Aa][Ss]/),
-    UNTIL: $ => prec(PREC.KEYWORD, /[Uu][Nn][Tt][Ii][Ll]/),
-    JUSQUE: $ => prec(PREC.KEYWORD, /[Jj][Uu][Ss][Qq][Ue]/),
-    CASE_OF: $ => prec(PREC.KEYWORD, /[Cc][Aa][Ss][Ee]\s+[Oo][Ff]/),
-    AU_CAS_OU: $ => prec(PREC.KEYWORD, /[Aa][Uu]\s+[Cc][Aa][Ss]\s+[Oo][Uu]/),
-    END_CASE: $ => prec(PREC.KEYWORD, /[Ee][Nn][Dd]\s+[Cc][Aa][Ss][Ee]/),
-    FIN_DE_CAS: $ => prec(PREC.KEYWORD, /[Ff][Ii][Nn]\s+[Dd][Ee]\s+[Cc][Aa][Ss]/),
-    PROPERTY: $ => prec(PREC.KEYWORD, /[Pp][Rr][Oo][Pp][Ee][Rr][Tt][Yy]/),
+    FOR_EACH: $ => prec(PREC.KEYWORD, choice($._FOR_EACH, $._POUR_CHAQUE)),
+    _FOR_EACH: $ => ci('for each'),
+    _POUR_CHAQUE: $ => ci('pour chaque'),
 
-    // Helper rules
-    condition: $ => choice(
-      $.value,
-      $.binary_operation,
-      seq('(', $._expression, ')')
-    ),
+    END_FOR_EACH: $ => prec(PREC.KEYWORD, choice($._END_FOR_EACH, $.FIN_DE_CHAQUE)),
+    _END_FOR_EACH: $ => ci('end for each'),
+    FIN_DE_CHAQUE: $ => ci('fin de chaque'),
+
+    UNTIL: $ => prec(PREC.KEYWORD, choice($._UNTIL, $._JUSQUE)),
+    _UNTIL: $ => ci('until '),
+    _JUSQUE: $ => ci('jusque '),
+
+    FOR: $ => prec(PREC.KEYWORD, choice($._FOR, $._BOUCLE)),
+    _FOR: $ => ci('for '),
+    _BOUCLE: $ => ci('boucle '),
+
+    END_FOR: $ => prec(PREC.KEYWORD, choice($._END_FOR, $.FIN_DE_BOUCLE)),
+    _END_FOR: $ => ci('end for'),
+    FIN_DE_BOUCLE: $ => ci('fin de boucle'),
+
+    WHILE: $ => prec(PREC.KEYWORD, choice($._WHILE, $._TANT_QUE)),
+    _WHILE: $ => ci('while '),
+    _TANT_QUE: $ => ci('tant que'),
+
+    END_WHILE: $ => prec(PREC.KEYWORD, choice($._END_WHILE, $.FIN_TANT_QUE)),
+    _END_WHILE: $ => ci('end while'),
+    FIN_TANT_QUE: $ => ci('fin tant que'),
+
+    REPEAT: $ => prec(PREC.KEYWORD, choice($._REPEAT, $._REPETER)),
+    _REPEAT: $ => ci('repeat '),
+    _REPETER: $ => ci('repeter '),
+
+    IF: $ => prec(PREC.KEYWORD, choice($._IF, $._SI)),
+    _IF: $ => ci('if '),
+    _SI: $ => ci('si '),
+
+    END_IF: $ => prec(PREC.KEYWORD, choice($._END_IF, $.FIN_SI)),
+    _END_IF: $ => ci('end if'),
+    FIN_SI: $ => ci('fin si'),
+
+    ELSE: $ => prec(PREC.KEYWORD, choice($._ELSE, $._SINON)),
+    _ELSE: $ => ci('else '),
+    _SINON: $ => ci('sinon '),
+
+    CASE_OF: $ => prec(PREC.KEYWORD, choice($._CASE_OF, $._AU_CAS_OU)),
+    _CASE_OF: $ => ci('case of'),
+    _AU_CAS_OU: $ => ci('au cas ou'),
+
+    END_CASE: $ => prec(PREC.KEYWORD, choice($._END_CASE, $.FIN_DE_CAS)),
+    _END_CASE: $ => ci('end case'),
+    FIN_DE_CAS: $ => ci('fin de cas'),
+
+    USE: $ => prec(PREC.KEYWORD, choice($._USE, $._UTILISER)),
+    _USE: $ => ci('use '),
+    _UTILISER: $ => ci('utiliser '),
+
+    END_USE: $ => prec(PREC.KEYWORD, choice($._END_USE, $.FIN_UTILISER)),
+    _END_USE: $ => ci('end use'),
+    FIN_UTILISER: $ => ci('fin utiliser'),
+
+    BEGIN_SQL: $ => prec(PREC.KEYWORD, choice($._BEGIN_SQL, $.DEBUT_SQL)),
+    _BEGIN_SQL: $ => ci('begin sql'),
+    DEBUT_SQL: $ => ci('debut sql'),
+
+    END_SQL: $ => prec(PREC.KEYWORD, choice($._END_SQL, $.FIN_SQL)),
+    _END_SQL: $ => ci('end sql'),
+    FIN_SQL: $ => ci('fin sql'),
+
+    FUNCTION: $ => prec(PREC.KEYWORD, ci('function ')),
+    CLASS: $ => prec(PREC.KEYWORD, ci('class ')),
+    CONSTRUCTOR: $ => prec(PREC.KEYWORD, ci('constructor ')),
+    EXTENDS: $ => prec(PREC.KEYWORD, ci('extends ')),
+    DECLARE: $ => prec(PREC.KEYWORD, ci('declare ')),
+    VAR: $ => prec(PREC.KEYWORD, ci('var ')),
+    ALIAS: $ => prec(PREC.KEYWORD, ci('alias ')),
+    PROPERTY: $ => prec(PREC.KEYWORD, ci('property ')),
+
+    object_chain: $ => prec.left(PREC.MEMBER, seq(
+      choice($.process_variable, $.local_variable),
+      repeat1($.property_access)
+    )),
 
     parameter_list: $ => seq(
       '(',
@@ -423,5 +499,62 @@ module.exports = grammar({
       $.value,
       ']'
     )),
+
+    // Base value without object access
+    _base_value: $ => choice(
+      $.number,
+      $.string,
+      $.date,
+      $.time,
+      $.boolean,
+      $._variable,
+      $._command,
+      $.function_call
+    ),
+
+    // Value that can include object access
+    value: $ => prec.left(PREC.VALUE, choice(
+      $._base_value,
+      $.object_chain,
+      $.array_access
+    )),
+
+    // Object chain (like Form.sys or Form.sys.terminated)
+    object_chain: $ => prec.left(PREC.MEMBER, seq(
+      choice($.process_variable, $.local_variable),
+      repeat1($.property_access)
+    )),
+
+    // Property access (.something)
+    property_access: $ => seq(
+      '.',
+      $._identifier
+    ),
+
+    // Function call
+    function_call: $ => prec.left(PREC.CALL, choice(
+      // Direct function call
+      seq(
+        field('name', $._identifier),
+        $.argument_list
+      ),
+      // Method call on object chain
+      seq(
+        field('object', $.object_chain),
+        $.argument_list
+      )
+    )),
+
+    _block_condition: $ => prec.left(PREC.EXPRESSION, choice(
+      $.parenthesized_expression,
+      prec.left(PREC.OPERATOR, seq(
+        $.parenthesized_expression,
+        choice('|', '||', '&', '&&'),
+        $.parenthesized_expression
+      ))
+    )),
+
+    // Allow spaces in command names
+    _command: $ => /[A-Za-z][A-Za-z0-9 _]*[A-Za-z0-9_]/,
   }
 });

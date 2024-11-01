@@ -5,14 +5,19 @@
     "fields": {}
   },
   {
-    "type": "AU_CAS_OU",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "BEGIN_SQL",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "DEBUT_SQL",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "CASE_OF",
@@ -30,11 +35,6 @@
     "fields": {}
   },
   {
-    "type": "DEBUT_SQL",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "DECLARE",
     "named": true,
     "fields": {}
@@ -47,70 +47,110 @@
   {
     "type": "END_CASE",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_DE_CAS",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_FOR",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_DE_BOUCLE",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_FOR_EACH",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_DE_CHAQUE",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_IF",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_SI",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_SQL",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_SQL",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_USE",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_UTILISER",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "END_WHILE",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "FIN_TANT_QUE",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "EXTENDS",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_DE_CAS",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_DE_CHAQUE",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_POUR",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_SQL",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_TANT_QUE",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "FIN_UTILISER",
     "named": true,
     "fields": {}
   },
@@ -135,42 +175,12 @@
     "fields": {}
   },
   {
-    "type": "JUSQUE",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "POUR",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "POUR_CHAQUE",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "PROPERTY",
     "named": true,
     "fields": {}
   },
   {
     "type": "REPEAT",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "REPETER",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "SINON",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "TANT_QUE",
     "named": true,
     "fields": {}
   },
@@ -185,11 +195,6 @@
     "fields": {}
   },
   {
-    "type": "UTILISER",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "VAR",
     "named": true,
     "fields": {}
@@ -198,21 +203,6 @@
     "type": "WHILE",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "alias_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "ALIAS",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "argument_list",
@@ -245,7 +235,7 @@
     }
   },
   {
-    "type": "assignment",
+    "type": "assignment_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -265,13 +255,37 @@
     "fields": {}
   },
   {
-    "type": "binary_operation",
+    "type": "binary_expression",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "object_chain",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "ternary_expression",
+          "named": true
+        },
         {
           "type": "value",
           "named": true
@@ -285,6 +299,29 @@
     "fields": {}
   },
   {
+    "type": "c_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "interprocess_variable",
+          "named": true
+        },
+        {
+          "type": "local_variable",
+          "named": true
+        },
+        {
+          "type": "process_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "case_block",
     "named": true,
     "fields": {},
@@ -292,10 +329,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "AU_CAS_OU",
-          "named": true
-        },
         {
           "type": "CASE_OF",
           "named": true
@@ -309,35 +342,19 @@
           "named": true
         },
         {
-          "type": "FIN_DE_CAS",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "SINON",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "alias_declaration",
-          "named": true
-        },
-        {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "case_condition",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -357,7 +374,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -365,11 +382,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -381,7 +398,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -404,52 +421,6 @@
     }
   },
   {
-    "type": "case_condition",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "condition",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "class_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "CLASS",
-          "named": true
-        },
-        {
-          "type": "EXTENDS",
-          "named": true
-        },
-        {
-          "type": "constructor_declaration",
-          "named": true
-        },
-        {
-          "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "property_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "class_type",
     "named": true,
     "fields": {}
@@ -458,37 +429,6 @@
     "type": "comment",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "condition",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
-          "named": true
-        },
-        {
-          "type": "method_call",
-          "named": true
-        },
-        {
-          "type": "ternary_operation",
-          "named": true
-        },
-        {
-          "type": "value",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "constructor_declaration",
@@ -507,23 +447,19 @@
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -543,7 +479,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -551,7 +487,7 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -559,7 +495,7 @@
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -571,7 +507,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -634,27 +570,19 @@
           "named": true
         },
         {
-          "type": "FIN_POUR",
-          "named": true
-        },
-        {
           "type": "FOR",
           "named": true
         },
         {
-          "type": "POUR",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
@@ -662,15 +590,7 @@
           "named": true
         },
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         },
         {
@@ -686,7 +606,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -694,7 +614,7 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -702,7 +622,7 @@
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -714,7 +634,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -749,23 +669,7 @@
           "named": true
         },
         {
-          "type": "FIN_DE_CHAQUE",
-          "named": true
-        },
-        {
           "type": "FOR_EACH",
-          "named": true
-        },
-        {
-          "type": "JUSQUE",
-          "named": true
-        },
-        {
-          "type": "POUR_CHAQUE",
-          "named": true
-        },
-        {
-          "type": "TANT_QUE",
           "named": true
         },
         {
@@ -777,15 +681,15 @@
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
@@ -793,15 +697,7 @@
           "named": true
         },
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         },
         {
@@ -817,7 +713,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -825,7 +721,7 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -833,7 +729,7 @@
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -845,7 +741,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -868,6 +764,32 @@
     }
   },
   {
+    "type": "function_call",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "object_chain",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "argument_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_declaration",
     "named": true,
     "fields": {},
@@ -880,23 +802,19 @@
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -916,7 +834,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -924,7 +842,7 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -932,7 +850,7 @@
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -948,7 +866,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -991,19 +909,15 @@
           "named": true
         },
         {
-          "type": "SINON",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
@@ -1011,15 +925,7 @@
           "named": true
         },
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         },
         {
@@ -1035,7 +941,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1043,11 +949,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1059,7 +965,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1092,27 +998,12 @@
     "fields": {}
   },
   {
-    "type": "method_call",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "argument_list",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "number",
     "named": true,
     "fields": {}
   },
   {
-    "type": "object_access",
+    "type": "object_chain",
     "named": true,
     "fields": {},
     "children": {
@@ -1120,11 +1011,15 @@
       "required": true,
       "types": [
         {
-          "type": "property_access",
+          "type": "local_variable",
           "named": true
         },
         {
-          "type": "value",
+          "type": "process_variable",
+          "named": true
+        },
+        {
+          "type": "property_access",
           "named": true
         }
       ]
@@ -1163,6 +1058,45 @@
       "types": [
         {
           "type": "parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parenthesized_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "object_chain",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "ternary_expression",
+          "named": true
+        },
+        {
+          "type": "value",
           "named": true
         }
       ]
@@ -1210,15 +1144,7 @@
       "required": true,
       "types": [
         {
-          "type": "JUSQUE",
-          "named": true
-        },
-        {
           "type": "REPEAT",
-          "named": true
-        },
-        {
-          "type": "REPETER",
           "named": true
         },
         {
@@ -1226,15 +1152,15 @@
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
@@ -1242,15 +1168,7 @@
           "named": true
         },
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         },
         {
@@ -1266,7 +1184,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1274,11 +1192,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1290,7 +1208,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1344,23 +1262,19 @@
       "required": false,
       "types": [
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -1380,7 +1294,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1388,11 +1302,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1404,7 +1318,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1439,35 +1353,23 @@
           "named": true
         },
         {
-          "type": "DEBUT_SQL",
-          "named": true
-        },
-        {
           "type": "END_SQL",
           "named": true
         },
         {
-          "type": "FIN_SQL",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -1487,7 +1389,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1495,11 +1397,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1511,7 +1413,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1534,7 +1436,7 @@
     }
   },
   {
-    "type": "ternary_operation",
+    "type": "ternary_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -1542,7 +1444,27 @@
       "required": true,
       "types": [
         {
-          "type": "condition",
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "object_chain",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1570,35 +1492,23 @@
           "named": true
         },
         {
-          "type": "FIN_UTILISER",
-          "named": true
-        },
-        {
           "type": "USE",
           "named": true
         },
         {
-          "type": "UTILISER",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "assignment",
-          "named": true
-        },
-        {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
           "type": "case_block",
-          "named": true
-        },
-        {
-          "type": "class_declaration",
           "named": true
         },
         {
@@ -1618,7 +1528,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1626,7 +1536,7 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -1634,7 +1544,7 @@
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1646,7 +1556,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1674,7 +1584,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array_access",
@@ -1689,6 +1599,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "interprocess_variable",
           "named": true
         },
@@ -1697,15 +1611,11 @@
           "named": true
         },
         {
-          "type": "method_call",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "object_access",
+          "type": "object_chain",
           "named": true
         },
         {
@@ -1744,6 +1654,21 @@
           "named": true
         },
         {
+          "type": "variable_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variable_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
           "type": "interprocess_variable",
           "named": true
         },
@@ -1771,27 +1696,19 @@
           "named": true
         },
         {
-          "type": "FIN_TANT_QUE",
-          "named": true
-        },
-        {
-          "type": "TANT_QUE",
-          "named": true
-        },
-        {
           "type": "WHILE",
           "named": true
         },
         {
-          "type": "alias_declaration",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "binary_expression",
           "named": true
         },
         {
-          "type": "binary_operation",
+          "type": "c_declaration",
           "named": true
         },
         {
@@ -1799,15 +1716,7 @@
           "named": true
         },
         {
-          "type": "class_declaration",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "condition",
           "named": true
         },
         {
@@ -1823,7 +1732,7 @@
           "named": true
         },
         {
-          "type": "function_declaration",
+          "type": "function_call",
           "named": true
         },
         {
@@ -1831,11 +1740,11 @@
           "named": true
         },
         {
-          "type": "method_call",
+          "type": "object_chain",
           "named": true
         },
         {
-          "type": "property_declaration",
+          "type": "parenthesized_expression",
           "named": true
         },
         {
@@ -1847,7 +1756,7 @@
           "named": true
         },
         {
-          "type": "ternary_operation",
+          "type": "ternary_expression",
           "named": true
         },
         {
@@ -1887,6 +1796,10 @@
   },
   {
     "type": "&",
+    "named": false
+  },
+  {
+    "type": "&&",
     "named": false
   },
   {
@@ -2014,12 +1927,92 @@
     "named": false
   },
   {
+    "type": "C_BLOB",
+    "named": false
+  },
+  {
+    "type": "C_BOOLEAN",
+    "named": false
+  },
+  {
+    "type": "C_COLLECTION",
+    "named": false
+  },
+  {
+    "type": "C_DATE",
+    "named": false
+  },
+  {
+    "type": "C_LONGINT",
+    "named": false
+  },
+  {
+    "type": "C_OBJECT",
+    "named": false
+  },
+  {
+    "type": "C_PICTURE",
+    "named": false
+  },
+  {
+    "type": "C_POINTER",
+    "named": false
+  },
+  {
+    "type": "C_REAL",
+    "named": false
+  },
+  {
+    "type": "C_TEXT",
+    "named": false
+  },
+  {
+    "type": "C_TIME",
+    "named": false
+  },
+  {
+    "type": "C_VARIANT",
+    "named": false
+  },
+  {
     "type": "Collection",
     "named": false
   },
   {
+    "type": "DEBUT_SQL",
+    "named": true
+  },
+  {
     "type": "Date",
     "named": false
+  },
+  {
+    "type": "FIN_DE_BOUCLE",
+    "named": true
+  },
+  {
+    "type": "FIN_DE_CAS",
+    "named": true
+  },
+  {
+    "type": "FIN_DE_CHAQUE",
+    "named": true
+  },
+  {
+    "type": "FIN_SI",
+    "named": true
+  },
+  {
+    "type": "FIN_SQL",
+    "named": true
+  },
+  {
+    "type": "FIN_TANT_QUE",
+    "named": true
+  },
+  {
+    "type": "FIN_UTILISER",
+    "named": true
   },
   {
     "type": "False",
@@ -2087,6 +2080,10 @@
   },
   {
     "type": "|",
+    "named": false
+  },
+  {
+    "type": "||",
     "named": false
   }
 ]
